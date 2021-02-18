@@ -30,12 +30,19 @@ try:
 	login = r.post(url,headers=headers,data=data,allow_redirects=True)
 	if 'userId' in login.text:
 		r.headers.update({'X-CSRFToken': login.cookies['csrftoken']}) 
-		url_id = "https://www.instagram.com/{}/?__a=1".format(Target) 
-		url_get_user_id = r.get(url_id).json()
-		user_id = str(url_get_user_id["logging_page_id"]) 
-		idinsta = str(user_id.split("_")[1])
-		s = requests.get("https://instagram.com/"+Target+"/?__a=1")
-		print("id Target:",idinsta)
+		try:
+			url_id = "https://www.instagram.com/{}/?__a=1".format(Target) 
+			url_get_user_id = r.get(url_id).json()
+			user_id = str(url_get_user_id["logging_page_id"]) 
+			idinsta = str(user_id.split("_")[1])
+			s = requests.get("https://instagram.com/"+Target+"/?__a=1")
+			print("id Target:",idinsta)
+		except:
+			try:
+				os.remove("report.py")
+				print("the Target is wrong...")
+			except:
+				print("the Target is wrong...")
 		data2 = {"source_name":"","reason_id":1,"frx_context":""}
 		r.headers.update({'X-CSRFToken': login.cookies['csrftoken']})
 	else:
@@ -168,4 +175,7 @@ try:
 		while sm != 'yes' or sm != 'yes':
 			tnmr()
 except:
-	os.remove("report.py")
+	try:
+		os.remove("report.py")
+	except:
+		d = 0
