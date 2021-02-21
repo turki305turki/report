@@ -31,7 +31,7 @@ try:
 	if 'userId' in login.text:
 		r.headers.update({'X-CSRFToken': login.cookies['csrftoken']}) 
 		try:
-			url_id = "https://www.instagram.com/{}/?__a=1".format(Target) 
+			url_id = "https://www.instagram.com/%s/?__a=1"%(Target)
 			url_get_user_id = r.get(url_id).json()
 			user_id = str(url_get_user_id["logging_page_id"]) 
 			idinsta = str(user_id.split("_")[1])
